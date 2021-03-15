@@ -37,7 +37,7 @@ file(GLOB MAIN_SOURCES
 	*.h
 	*.hpp
 )
-add_executable(main WIN32 ${MAIN_SOURCES} ${MANAGER_MOC})
+add_executable(main WIN32 MACOSX_BUNDLE ${MAIN_SOURCES} ${MANAGER_MOC})
 set_target_properties(main PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(main Qt5::Widgets Qt5::Multimedia)
 

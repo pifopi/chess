@@ -1,0 +1,105 @@
+name: C++ CI
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, macOS-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+    - name: Add msbuild to PATH
+      if: contains( matrix.os, 'windows')
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: C++ generation
+      if: contains( matrix.os, 'windows')
+      run: |
+        mkdir bin
+        cd bin
+        cmake ../src -G "Visual Studio 16 2019" -DCMAKE_PREFIX_PATH=%Qt5_DIR%
+        MSBuild.exe .\main.vcxproj /p:Configuration=Debug
+        MSBuild.exe .\main.vcxproj /p:Configuration=Release
+        MSBuild.exe .\main.vcxproj /p:Configuration=RelWithDebInfo
+        MSBuild.exe .\main.vcxproj /p:Configuration=MinSizeRel
+    - name: C++ generation
+      if: contains( matrix.os, 'ubuntu') || contains( matrix.os, 'macOS')
+      run: |
+        mkdir bin
+        cd bin
+        mkdir Debug
+        mkdir Release
+        mkdir RelWithDebInfo
+        mkdir MinSizeRel
+        cd Debug
+        cmake ../../src -DCMAKE_PREFIX_PATH=%Qt5_DIR% -DCMAKE_BUILD_TYPE=Debug
+        make
+        cd ../Release
+        cmake ../../src -DCMAKE_PREFIX_PATH=%Qt5_DIR% -DCMAKE_BUILD_TYPE=Release
+        make
+        cd ../RelWithDebInfo
+        cmake ../../src -DCMAKE_PREFIX_PATH=%Qt5_DIR% -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        make
+        cd ../MinSizeRel
+        cmake ../../src -DCMAKE_PREFIX_PATH=%Qt5_DIR% -DCMAKE_BUILD_TYPE=MinSizeRel
+        make
+    - name: Generate windows package
+      if: contains( matrix.os, 'windows')
+      run: |
+        mkdir package
+        move bin/Release/main.exe package/
+        move bin/*.wav package/
+        move bin/*.png package/
+        windeployqt ./package/main.exe
+    # - name: Generate ubuntu package
+      # if: contains( matrix.os, 'ubuntu')
+      # run: |
+        # mkdir package
+        # cd package
+        # mkdir bin
+        # mkdir share
+        # cd share
+        # mkdir applications
+        # cd applications
+        # touch main.desktop
+        # echo "[Desktop Entry]\nExec=main\nType=Application\nName=main.desktop" > main.desktop
+        # cd ../../..
+        # mv bin/Release/main package/bin/
+        # mv bin/Release/*.wav package/
+        # mv bin/Release/*.png package/
+        # wget "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.appimage"
+        # chmod a+x linuxdeployqt-continuous-x86_64.appimage
+        # chmod a+x package/bin/main
+        # ./linuxdeployqt-continuous-x86_64.appimage ./package/share/applications/main.desktop -verbose=3
+    # - name: Generate mac package
+      # if: contains( matrix.os, 'mac')
+      # run: |
+        # mkdir package
+        # cd package
+        # mkdir main.app
+        # cd ..
+        # mv bin/Release/main.app/* package/main.app/
+        # mv bin/Release/*.wav package/
+        # mv bin/Release/*.png package/
+        # macdeployqt ./package/main.app
+    - uses: actions/upload-artifact@v2
+      if: contains( matrix.os, 'windows')
+      with:
+        name: Chess executable for windows
+        path: package/
+    # - uses: actions/upload-artifact@v2
+      # if: contains( matrix.os, 'ubuntu')
+      # with:
+        # name: Chess executable for ubuntu
+        # path: package/
+    # - uses: actions/upload-artifact@v2
+      # if: contains( matrix.os, 'mac')
+      # with:
+        # name: Chess executable for mac
+        # path: package/
