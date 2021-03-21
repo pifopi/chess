@@ -39,7 +39,7 @@ namespace Chess
         QHBoxLayout* m_layoutFaction;
         QVBoxLayout* m_layout;
 
-        private slots:
+    private slots:
         void LeftButtonClicked();
         void RightButtonClicked();
         void NextButtonClicked();

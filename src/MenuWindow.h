@@ -25,7 +25,7 @@ namespace Chess
         QPushButton* m_showHelpWindowButton;
         QVBoxLayout* m_layout;
 
-        private slots:
+    private slots:
         void ShowPlayerSelectionWindow();
         void ShowOptionsWindow();
         void ShowHelpWindow();

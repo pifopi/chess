@@ -23,7 +23,7 @@ namespace Chess
         QCheckBox* m_soundCheckBox;
         QVBoxLayout* m_layout;
 
-        private slots:
+    private slots:
         void PlaySound(const int& state);
     };
 }

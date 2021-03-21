@@ -24,7 +24,7 @@ namespace Chess
         return m_name;
     }
 
-    const std::vector<std::shared_ptr<SpaceShip>>& Player::GetSpaceShips()
+    const std::vector<std::shared_ptr<SpaceShip>>& Player::GetSpaceShips() const
     {
         return m_spaceShips;
     }

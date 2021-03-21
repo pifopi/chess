@@ -52,7 +52,7 @@ namespace Chess
         QVBoxLayout* m_descriptionLayout;
         QHBoxLayout* m_layout;
 
-        private slots:
+    private slots:
         void ShowOptionsWindow();
         void ShowHelpButton();
         void SelectCase(const QString& text);

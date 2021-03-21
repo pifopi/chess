@@ -10,12 +10,12 @@ namespace Chess
         return instance;
     }
 
-    const QIcon& ImageManager::GetWindowIconImage()
+    const QIcon& ImageManager::GetWindowIconImage() const
     {
         return m_windowIcon;
     }
 
-    const QIcon& ImageManager::GetFactionImage(const Faction& faction)
+    const QIcon& ImageManager::GetFactionImage(const Faction& faction) const
     {
         switch (faction)
         {

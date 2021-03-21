@@ -14,8 +14,8 @@ namespace Chess
     public:
         static ImageManager& Instance();
 
-        const QIcon& GetWindowIconImage();
-        const QIcon& GetFactionImage(const Faction& faction);
+        const QIcon& GetWindowIconImage() const;
+        const QIcon& GetFactionImage(const Faction& faction) const;
         const QIcon& GetSpaceImage() const;
         const QIcon& GetSpaceShipImage(const Faction& faction, const SpaceShip::Size& size) const;
 

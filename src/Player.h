@@ -17,7 +17,7 @@ namespace Chess
 
         const Faction& GetFaction() const;
         const QString& GetName() const;
-        const std::vector<std::shared_ptr<SpaceShip>>& GetSpaceShips();
+        const std::vector<std::shared_ptr<SpaceShip>>& GetSpaceShips() const;
 
         void AddSpaceShip(const std::shared_ptr<SpaceShip>& spaceShip);
         void RemoveSpaceShip(const std::shared_ptr<SpaceShip>& spaceShip);
