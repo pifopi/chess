@@ -37,9 +37,9 @@ file(GLOB MAIN_SOURCES
 	*.h
 	*.hpp
 )
-add_executable(main WIN32 MACOSX_BUNDLE ${MAIN_SOURCES} ${MANAGER_MOC})
-set_target_properties(main PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(main Qt5::Widgets Qt5::Multimedia)
+add_executable(chess WIN32 MACOSX_BUNDLE ${MAIN_SOURCES} ${MANAGER_MOC})
+set_target_properties(chess PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(chess Qt5::Widgets Qt5::Multimedia)
 
 #copy needed files
 file(GLOB FILES

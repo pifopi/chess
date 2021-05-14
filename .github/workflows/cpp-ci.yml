@@ -17,17 +17,17 @@ jobs:
         mkdir bin
         cd bin
         cmake ../src -G "Visual Studio 16 2019" -DCMAKE_PREFIX_PATH=%Qt5_DIR%
-        MSBuild.exe .\main.vcxproj /p:Configuration=Debug
-        MSBuild.exe .\main.vcxproj /p:Configuration=Release
-        MSBuild.exe .\main.vcxproj /p:Configuration=RelWithDebInfo
-        MSBuild.exe .\main.vcxproj /p:Configuration=MinSizeRel
+        MSBuild.exe .\chess.vcxproj /p:Configuration=Debug
+        MSBuild.exe .\chess.vcxproj /p:Configuration=Release
+        MSBuild.exe .\chess.vcxproj /p:Configuration=RelWithDebInfo
+        MSBuild.exe .\chess.vcxproj /p:Configuration=MinSizeRel
     - name: Generate windows package
       run: |
         mkdir package
-        move bin/Release/main.exe package/
+        move bin/Release/chess.exe package/
         move bin/*.wav package/
         move bin/*.png package/
-        windeployqt ./package/main.exe
+        windeployqt ./package/chess.exe
     - uses: actions/upload-artifact@v2
       with:
         name: Chess executable for windows
